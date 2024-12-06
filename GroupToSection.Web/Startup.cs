@@ -57,6 +57,12 @@ namespace GroupToSection.Web
             services.AddSingleton<SqlStringBuilder<Group>>();
             #endregion
 
+            #region register GroupCategory
+            services.AddTransient<IGroupCategoryService, GroupCategoryService>();
+            services.AddTransient<IGroupCategoryDataAccess, GroupCategoryDataAccess>();
+            services.AddSingleton<SqlStringBuilder<GroupCategory>>();
+            #endregion
+
             #region register Log
             services.AddTransient<ILogService, LogService>();
             services.AddTransient<ILogDataAccess, LogDataAccess>();
@@ -190,6 +196,10 @@ namespace GroupToSection.Web
                 CreateMap<Group, GroupViewModel>();
 
                 CreateMap<GroupViewModel, Group>();
+        
+                CreateMap<GroupCategory, GroupCategoryViewModel>();
+
+                CreateMap<GroupCategoryViewModel, GroupCategory>();
         
                 CreateMap<Log, LogViewModel>();
 

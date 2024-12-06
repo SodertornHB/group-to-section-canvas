@@ -159,29 +159,32 @@
     <data name="Group" xml:space="preserve">
     <value>Group</value>
   </data>
-    <data name="id" xml:space="preserve">
-    <value>id</value>
+    <data name="Id" xml:space="preserve">
+    <value>Id</value>
   </data>
-    <data name="name" xml:space="preserve">
-    <value>name</value>
+    <data name="Created_at" xml:space="preserve">
+    <value>Created_at</value>
   </data>
-    <data name="created_at" xml:space="preserve">
-    <value>created_at</value>
+    <data name="GroupCategoryId" xml:space="preserve">
+    <value>GroupCategoryId</value>
   </data>
-    <data name="group_category_id" xml:space="preserve">
-    <value>group_category_id</value>
+    <data name="Sis_Group_Id" xml:space="preserve">
+    <value>Sis_Group_Id</value>
   </data>
-    <data name="sis_group_id" xml:space="preserve">
-    <value>sis_group_id</value>
+    <data name="Sis_Import_Id" xml:space="preserve">
+    <value>Sis_Import_Id</value>
   </data>
-    <data name="sis_import_id" xml:space="preserve">
-    <value>sis_import_id</value>
+    <data name="GroupCategory" xml:space="preserve">
+    <value>GroupCategory</value>
+  </data>
+    <data name="Course_Id" xml:space="preserve">
+    <value>Course_Id</value>
+  </data>
+    <data name="Sis_GroupCategory_Id" xml:space="preserve">
+    <value>Sis_GroupCategory_Id</value>
   </data>
     <data name="Log" xml:space="preserve">
     <value>Log</value>
-  </data>
-    <data name="Id" xml:space="preserve">
-    <value>Id</value>
   </data>
     <data name="Origin" xml:space="preserve">
     <value>Origin</value>

@@ -3,15 +3,15 @@
 @* --------------------------------------------------------------------*@
 @using Localization
 @inject LocService SharedLocalizer
-@model IEnumerable<GroupToSection.Web.ViewModel.GroupViewModel>
+@model IEnumerable<GroupToSection.Web.ViewModel.GroupCategoryViewModel>
 
 @{
-    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("List")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("List")} {SharedLocalizer.GetLocalizedHtmlString("GroupCategory")}";
 }
 
-<h1>@SharedLocalizer.GetLocalizedHtmlString("Group")</h1>
+<h1>@SharedLocalizer.GetLocalizedHtmlString("GroupCategory")</h1>
 
-<a asp-controller="Group" asp-action="Create">
+<a asp-controller="GroupCategory" asp-action="Create">
     <button type="button" class="btn btn-info btn-lg"><span class="bi bi-plus-circle"></span>@SharedLocalizer.GetLocalizedHtmlString("Create New")</button>
 </a>
 <hr />
@@ -22,10 +22,10 @@
                 @SharedLocalizer.GetLocalizedHtmlString("Created_at")
             </th>
             <th>
-                @SharedLocalizer.GetLocalizedHtmlString("GroupCategoryId")
+                @SharedLocalizer.GetLocalizedHtmlString("Course_Id")
             </th>
             <th>
-                @SharedLocalizer.GetLocalizedHtmlString("Sis_Group_Id")
+                @SharedLocalizer.GetLocalizedHtmlString("Sis_GroupCategory_Id")
             </th>
             <th>
                 @SharedLocalizer.GetLocalizedHtmlString("Sis_Import_Id")
@@ -39,19 +39,19 @@
             <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.Created_at">
                 @item.Created_at
             </td>
-            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.GroupCategoryId">
-                @item.GroupCategoryId
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.Course_Id">
+                @item.Course_Id
             </td>
-            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.Sis_Group_Id">
-                @item.Sis_Group_Id
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.Sis_GroupCategory_Id">
+                @item.Sis_GroupCategory_Id
             </td>
             <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.Sis_Import_Id">
                 @item.Sis_Import_Id
             </td>
   
             <td>
-                <a asp-controller="Group" asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Edit")</a> | 
-                <a asp-controller="Group" asp-action="Remove" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Delete")</a> 
+                <a asp-controller="GroupCategory" asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Edit")</a> | 
+                <a asp-controller="GroupCategory" asp-action="Remove" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Delete")</a> 
             </td>
         </tr>
 }

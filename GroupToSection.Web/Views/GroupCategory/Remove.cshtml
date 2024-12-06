@@ -4,13 +4,13 @@
 @using Localization
 @using Microsoft.Extensions.Options
 @inject LocService SharedLocalizer
-@model GroupToSection.Web.ViewModel.GroupViewModel
+@model GroupToSection.Web.ViewModel.GroupCategoryViewModel
 
 @{
-    ViewData["Title"] = $"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+    ViewData["Title"] = $"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {SharedLocalizer.GetLocalizedHtmlString("GroupCategory")}";
 }
 
-<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {@SharedLocalizer.GetLocalizedHtmlString("Group")}")</h1>
+<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {@SharedLocalizer.GetLocalizedHtmlString("GroupCategory")}")</h1>
 
 <h3>@SharedLocalizer.GetLocalizedHtmlString("Are you sure you want to delete this?")</h3>
 <div>
@@ -24,16 +24,16 @@
             @Model.Created_at
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="GroupCategoryId" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("GroupCategoryId")</label>
+            <label asp-for="Course_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Course_Id")</label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.GroupCategoryId
+            @Model.Course_Id
         </dd>
         <dt class = "col-sm-2">
-            <label asp-for="Sis_Group_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_Group_Id")</label>
+            <label asp-for="Sis_GroupCategory_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_GroupCategory_Id")</label>
         </dt>
         <dd class = "col-sm-10">
-            @Model.Sis_Group_Id
+            @Model.Sis_GroupCategory_Id
         </dd>
         <dt class = "col-sm-2">
             <label asp-for="Sis_Import_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_Import_Id")</label>
@@ -42,10 +42,10 @@
             @Model.Sis_Import_Id
         </dd>
     </dl>
-    <form method="post"  enctype="multipart/form-data" asp-controller="Group" asp-action="Remove">    
+    <form method="post"  enctype="multipart/form-data" asp-controller="GroupCategory" asp-action="Remove">    
         @Html.HiddenFor(x => x.Id)
         <input type="submit" value="@SharedLocalizer.GetLocalizedHtmlString("Delete")" class="btn btn-danger" /> |
-        <a asp-controller="Group" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
+        <a asp-controller="GroupCategory" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
     </form>
     </div>
 

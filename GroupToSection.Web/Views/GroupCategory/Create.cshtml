@@ -4,18 +4,18 @@
 @using Localization
 @using Microsoft.Extensions.Options
 @inject LocService SharedLocalizer
-@model GroupToSection.Web.ViewModel.GroupViewModel
+@model GroupToSection.Web.ViewModel.GroupCategoryViewModel
 
 @{
-    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("Create")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("Create")} {SharedLocalizer.GetLocalizedHtmlString("GroupCategory")}";
 }
 
-<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Create")} {@SharedLocalizer.GetLocalizedHtmlString("Group")}")</h1>
+<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Create")} {@SharedLocalizer.GetLocalizedHtmlString("GroupCategory")}")</h1>
 
 <hr />
 <div class="row">
     <div class="col-md">
-        <form method="post"  enctype="multipart/form-data" asp-controller="Group" asp-action="Create">
+        <form method="post"  enctype="multipart/form-data" asp-controller="GroupCategory" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Created_at" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Created_at")</label>
@@ -23,14 +23,14 @@
                 <span asp-validation-for="Created_at" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GroupCategoryId" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("GroupCategoryId")</label>
-                <input name="GroupCategoryId" asp-for="GroupCategoryId" class="form-control" />
-                <span asp-validation-for="GroupCategoryId" class="text-danger"></span>
+                <label asp-for="Course_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Course_Id")</label>
+                <input name="Course_Id" asp-for="Course_Id" class="form-control" />
+                <span asp-validation-for="Course_Id" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sis_Group_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_Group_Id")</label>
-                <input name="Sis_Group_Id" asp-for="Sis_Group_Id" class="form-control" />
-                <span asp-validation-for="Sis_Group_Id" class="text-danger"></span>
+                <label asp-for="Sis_GroupCategory_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_GroupCategory_Id")</label>
+                <input name="Sis_GroupCategory_Id" asp-for="Sis_GroupCategory_Id" class="form-control" />
+                <span asp-validation-for="Sis_GroupCategory_Id" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Sis_Import_Id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("Sis_Import_Id")</label>
@@ -45,7 +45,7 @@
 </div>
 
 <div>
-    <a asp-controller="Group" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
+    <a asp-controller="GroupCategory" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
 </div>
 
 @section Scripts {

@@ -9,12 +9,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GroupToSection.Web.ViewModel
 {
-    public partial class GroupViewModel : ViewModelBase
+    public partial class GroupCategoryViewModel : ViewModelBase
     {
         [DataType(DataType.Text)]
         public virtual DateTime? Created_at {get;set;} 
-        public virtual int GroupCategoryId {get;set;} 
-        public virtual int Sis_Group_Id {get;set;} 
+        public virtual int Course_Id {get;set;} 
+        public virtual int Sis_GroupCategory_Id {get;set;} 
         public virtual int Sis_Import_Id {get;set;} 
         public virtual string GetBackToListLink(string applicationName) => $"/{applicationName}/{GetType().Name.Replace("ViewModel","")}";
     }
