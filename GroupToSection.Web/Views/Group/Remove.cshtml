@@ -1,0 +1,61 @@
+@* --------------------------------------------------------------------*@
+@* Warning! This is an auto generated file. Changes may be overwritten *@
+@* --------------------------------------------------------------------*@
+@using Localization
+@using Microsoft.Extensions.Options
+@inject LocService SharedLocalizer
+@model GroupToSection.Web.ViewModel.GroupViewModel
+
+@{
+    ViewData["Title"] = $"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+}
+
+<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Delete")} {@SharedLocalizer.GetLocalizedHtmlString("Group")}")</h1>
+
+<h3>@SharedLocalizer.GetLocalizedHtmlString("Are you sure you want to delete this?")</h3>
+<div>
+    <hr />
+    <dl class="row">
+
+        <dt class = "col-sm-2">
+            <label asp-for="name" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("name")</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.name
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="created_at" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("created_at")</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.created_at
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="group_category_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("group_category_id")</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.group_category_id
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="sis_group_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("sis_group_id")</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.sis_group_id
+        </dd>
+        <dt class = "col-sm-2">
+            <label asp-for="sis_import_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("sis_import_id")</label>
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.sis_import_id
+        </dd>
+    </dl>
+    <form method="post"  enctype="multipart/form-data" asp-controller="Group" asp-action="Remove">    
+        @Html.HiddenFor(x => x.Id)
+        <input type="submit" value="@SharedLocalizer.GetLocalizedHtmlString("Delete")" class="btn btn-danger" /> |
+        <a asp-controller="Group" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
+    </form>
+    </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

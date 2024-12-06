@@ -1,0 +1,58 @@
+@* --------------------------------------------------------------------*@
+@* Warning! This is an auto generated file. Changes may be overwritten *@
+@* --------------------------------------------------------------------*@
+@using Localization
+@using Microsoft.Extensions.Options
+@inject LocService SharedLocalizer
+@model GroupToSection.Web.ViewModel.GroupViewModel
+
+@{
+    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("Create")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+}
+
+<h1>@($"{SharedLocalizer.GetLocalizedHtmlString("Create")} {@SharedLocalizer.GetLocalizedHtmlString("Group")}")</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md">
+        <form method="post"  enctype="multipart/form-data" asp-controller="Group" asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="name" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("name")</label>
+                <input name="name" asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="created_at" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("created_at")</label>
+                <input name="created_at" asp-for="created_at" class="form-control" />
+                <span asp-validation-for="created_at" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="group_category_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("group_category_id")</label>
+                <input name="group_category_id" asp-for="group_category_id" class="form-control" />
+                <span asp-validation-for="group_category_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sis_group_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("sis_group_id")</label>
+                <input name="sis_group_id" asp-for="sis_group_id" class="form-control" />
+                <span asp-validation-for="sis_group_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="sis_import_id" class="control-label">@SharedLocalizer.GetLocalizedHtmlString("sis_import_id")</label>
+                <input name="sis_import_id" asp-for="sis_import_id" class="form-control" />
+                <span asp-validation-for="sis_import_id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@SharedLocalizer.GetLocalizedHtmlString("Create")" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Group" asp-action="Index">@SharedLocalizer.GetLocalizedHtmlString("Back to List")</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

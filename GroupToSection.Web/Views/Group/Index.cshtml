@@ -1,0 +1,65 @@
+@* --------------------------------------------------------------------*@
+@* Warning! This is an auto generated file. Changes may be overwritten *@
+@* --------------------------------------------------------------------*@
+@using Localization
+@inject LocService SharedLocalizer
+@model IEnumerable<GroupToSection.Web.ViewModel.GroupViewModel>
+
+@{
+    ViewData["Title"] = @$"{SharedLocalizer.GetLocalizedHtmlString("List")} {SharedLocalizer.GetLocalizedHtmlString("Group")}";
+}
+
+<h1>@SharedLocalizer.GetLocalizedHtmlString("Group")</h1>
+
+<a asp-controller="Group" asp-action="Create">
+    <button type="button" class="btn btn-info btn-lg"><span class="bi bi-plus-circle"></span>@SharedLocalizer.GetLocalizedHtmlString("Create New")</button>
+</a>
+<hr />
+<table class="table data-table">
+    <thead>
+        <tr>
+            <th>
+                @SharedLocalizer.GetLocalizedHtmlString("name")
+            </th>
+            <th>
+                @SharedLocalizer.GetLocalizedHtmlString("created_at")
+            </th>
+            <th>
+                @SharedLocalizer.GetLocalizedHtmlString("group_category_id")
+            </th>
+            <th>
+                @SharedLocalizer.GetLocalizedHtmlString("sis_group_id")
+            </th>
+            <th>
+                @SharedLocalizer.GetLocalizedHtmlString("sis_import_id")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.name">
+                @item.name
+            </td>
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.created_at">
+                @item.created_at
+            </td>
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.group_category_id">
+                @item.group_category_id
+            </td>
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.sis_group_id">
+                @item.sis_group_id
+            </td>
+            <td class="tooltip-r" data-toggle="tooltip" data-placement="left" title="@item.sis_import_id">
+                @item.sis_import_id
+            </td>
+  
+            <td>
+                <a asp-controller="Group" asp-action="Edit" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Edit")</a> | 
+                <a asp-controller="Group" asp-action="Remove" asp-route-id="@item.Id">@SharedLocalizer.GetLocalizedHtmlString("Delete")</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
