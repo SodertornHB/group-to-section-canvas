@@ -5,80 +5,45 @@
 //--------------------------------------------------------------------------------------------------------------------
 
 using AutoMapper;
-using GroupToSection.Logic.Model;
-using GroupToSection.Logic.Services;
 using GroupToSection.Web.ViewModel;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using GroupToSection.Logic.Settings;
+using Logic.Service;
+using Microsoft.Extensions.Options;
 
 namespace GroupToSection.Web.Controllers
 {
     public partial class GroupController : Controller
     {
-        private readonly ILogger<GroupController> logger;
-        private readonly IGroupService service;
-        private readonly IMapper mapper;
-
-        public GroupController(ILogger<GroupController> logger, 
-        IGroupService service, 
-        IMapper mapper)
+        public partial class GroupCategoryController : Controller
         {
-            this.logger = logger;
-            this.service = service;
-            this.mapper = mapper;
-        }
+            private readonly ILogger<GroupCategoryController> logger;
+            protected readonly IGroupService service;
+            private readonly CanvasApiSettings settings;
+            private readonly string resourceUrl;
+            private readonly IMapper mapper;
 
-        public virtual async Task<IActionResult> Index()
-        {
-            var list = await service.GetAll();
-            var viewModels = mapper.Map<IEnumerable<GroupViewModel>>(list);
-            return View(viewModels.OrderByDescending(x => x.Id));
-        }
-        
-        public ActionResult Create()
-        {
-            return View(new GroupViewModel());
-        }
+            public GroupCategoryController(ILogger<GroupCategoryController> logger,
+            IGroupService service, IOptions<CanvasApiSettings> settingsOptions,
+            IMapper mapper)
+            {
+                this.logger = logger;
+                this.service = service;
+                this.mapper = mapper;
+                this.settings = settingsOptions.Value;
+                resourceUrl = $"{settings.BaseUrl}/groups";
+            }
 
-        [HttpPost]
-        public virtual async Task<ActionResult> Create([FromForm]GroupViewModel viewModel)
-        {
-            var model = mapper.Map<Group>(viewModel);
-            await service.Insert(model);
-            return RedirectToAction(nameof(Index));
-        }
-
-        public virtual async Task<ActionResult> Edit(int id)
-        {
-            var entity = await service.Get(id);
-            return View(mapper.Map<GroupViewModel>(entity));
-        }
-
-
-        [HttpPost]
-        public virtual async Task<ActionResult> Edit([FromForm]GroupViewModel viewModel)
-        {
-            var model = mapper.Map<Group>(viewModel);
-            await service.Update(model);
-            return RedirectToAction(nameof(Index));         
-        }
-
-        public virtual async Task<ActionResult> Remove(int id)
-        {
-            var entity = await service.Get(id);
-            return View(mapper.Map<GroupViewModel>(entity));        
-        }
-
-        [HttpPost]
-        public virtual async Task<ActionResult> Remove([FromForm]GroupViewModel viewModel)
-        {
-            var model = mapper.Map<Group>(viewModel);
-            await service.Delete(viewModel.Id);
-            return RedirectToAction(nameof(Index));         
+            public virtual async Task<IActionResult> Index()
+            {
+                var list = await service.Get(resourceUrl);
+                var viewModels = mapper.Map<IEnumerable<GroupCategoryViewModel>>(list);
+                return View(viewModels.OrderByDescending(x => x.Id));
+            }
         }
     }
 }

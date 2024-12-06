@@ -70,7 +70,7 @@ namespace GroupToSection.Logic.Http
         {
             var client = clientFactory.CreateClient();
             client.SetBearerTokenIfExists(settings.BearerToken);
-            return await client.SendAsync(request);        
+            return await client.SendAsync(request);
         }
 
         #region private
@@ -78,9 +78,12 @@ namespace GroupToSection.Logic.Http
         private async Task<HttpResponse> SendRequest(HttpMethod method, Uri url, string requestContent = "")
         {
             logger.LogDebug($"Sending {method} request to {url}. Content: {requestContent}");
+            if(method == HttpMethod.Get && !url.ToString().Contains('?')) url = new Uri($"{url}?per_page=100");
             var request = new HttpRequestMessage(method, url);
             if (!string.IsNullOrEmpty(requestContent)) request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
             var response = await Send(request);
+            if (response.StatusCode == HttpStatusCode.NotFound) throw new HttpRequestException($"Resource {url} not found", null, HttpStatusCode.NotFound);
+            if (!response.IsSuccessStatusCode) throw new HttpRequestException($"Unabel to get resource {url}", null, response.StatusCode);
             string responseContent = await GetContent(response);
             logger.LogDebug($"Response code {response.StatusCode}. Content: {responseContent}");
             return new HttpResponse(response.StatusCode, response.IsSuccessStatusCode, responseContent, response.Headers);
@@ -88,6 +91,7 @@ namespace GroupToSection.Logic.Http
 
         private static async Task<string> GetContent(HttpResponseMessage response)
         {
+            var responseStr = string.Empty;
             try
             {
                 var contenttype = response.Content.Headers.FirstOrDefault(h => h.Key.Equals("Content-Type"));
@@ -97,17 +101,22 @@ namespace GroupToSection.Logic.Http
                 if (rawencoding.Contains("utf8") || rawencoding.Contains("UTF-8"))
                 {
                     var bytes = await response.Content.ReadAsByteArrayAsync();
-                    return Encoding.UTF8.GetString(bytes);
+                    responseStr = Encoding.UTF8.GetString(bytes);
                 }
                 else
                 {
-                    return await response.Content.ReadAsStringAsync();
+                    responseStr = await response.Content.ReadAsStringAsync();
                 }
             }
             catch (Exception)
             {
-                return await response.Content.ReadAsStringAsync();
+                responseStr = await response.Content.ReadAsStringAsync();
             }
+            if (responseStr.Contains("unauthenticated")) throw new HttpRequestException("User not authenicated", null, HttpStatusCode.Forbidden);
+
+            return responseStr;
+
+
         }
 
         #endregion
@@ -117,7 +126,7 @@ namespace GroupToSection.Logic.Http
 
     public class HttpResponse
     {
-        public HttpResponse(HttpStatusCode statusCode, bool isSuccess) : this(statusCode,  isSuccess, string.Empty, null)
+        public HttpResponse(HttpStatusCode statusCode, bool isSuccess) : this(statusCode, isSuccess, string.Empty, null)
         { }
 
         public HttpResponse(HttpStatusCode statusCode, bool isSuccess, string content, HttpResponseHeaders headers)
@@ -139,7 +148,7 @@ namespace GroupToSection.Logic.Http
         {
             if (!IsSuccess)
             {
-                throw new HttpRequestException($"Request failed ({StatusCode}). {Content}",null, StatusCode);
+                throw new HttpRequestException($"Request failed ({StatusCode}). {Content}", null, StatusCode);
             }
         }
     }
@@ -147,7 +156,7 @@ namespace GroupToSection.Logic.Http
     #endregion
 
     #region Extensions 
-    
+
     public static class HttpClientExtensions
     {
         public static void SetBearerTokenIfExists(this System.Net.Http.HttpClient client, string bearerToken)

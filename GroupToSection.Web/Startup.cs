@@ -51,11 +51,6 @@ namespace GroupToSection.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            #region register Group
-            services.AddTransient<IGroupService, GroupService>();
-            services.AddTransient<IGroupDataAccess, GroupDataAccess>();
-            services.AddSingleton<SqlStringBuilder<Group>>();
-            #endregion
 
             #region register GroupCategory
             services.AddTransient<IGroupCategoryService, GroupCategoryService>();
