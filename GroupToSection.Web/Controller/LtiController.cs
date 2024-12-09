@@ -1,4 +1,5 @@
-﻿using GroupToSection.Web.ViewModel;
+﻿using GroupToSection.Logic.Services;
+using GroupToSection.Web.ViewModel;
 using Logic.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,13 +12,19 @@ namespace GroupToSection.Web.Controllers
     [Route("lti")]
     public class LtiController : Controller
     {
-        private readonly ICourseService service;    
-            public LtiController(
-            ICourseService service
+        private readonly ICourseService service;
+        private readonly ISectionService sectionService;
+        private readonly IGroupService groupService;
+
+        public LtiController(
+            ICourseService courseService,
+            ISectionService sectionService,
+            IGroupService groupService
             )
         {
-            this.service = service;
-           
+            this.service = courseService;
+            this.sectionService = sectionService;
+            this.groupService = groupService;
         }
 
 #if DEBUG
@@ -45,19 +52,22 @@ namespace GroupToSection.Web.Controllers
             return View("GroupToSection", viewModel);
         }
 
-        //[HttpPost("update-group-to-section")]
-        //public async Task<IActionResult> UpdateGroupToSection(int id)
-        //{
-        //    try
-        //    {
-        //        await groupService.CreateOrUpdateSectionFromGroup(id);
-        //        return new OkResult();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return new BadRequestObjectResult("Error: " + e.Message);
-        //    }
-        //}
-       
+        [HttpPost("update-group-to-section")]
+        public async Task<IActionResult> UpdateGroupToSection(int groupId)
+        {
+            try
+            {
+                var group = await groupService.GetById(groupId);
+                var sectionId = await sectionService.CreateSectionIfNotExist(group);
+                var userIds = await groupService.GetUserIds(group.Id);
+                await sectionService.EnrollUsersInSection(sectionId, userIds);
+                return new OkResult();
+            }
+            catch (Exception e)
+            {
+                return new BadRequestObjectResult("Error: " + e.Message);
+            }
+        }
+
     }
 }

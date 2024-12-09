@@ -1,5 +1,4 @@
 using AutoMapper;
-using CourseToSection.Logic.Services;
 using GroupToSection.Logic.Http;
 using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Services;
@@ -7,10 +6,8 @@ using GroupToSection.Logic.Settings;
 using Logic.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace Logic.Service

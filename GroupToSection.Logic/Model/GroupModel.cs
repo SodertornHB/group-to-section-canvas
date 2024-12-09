@@ -1,5 +1,4 @@
-
-//--------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------------------
 // Warning! This is an auto generated file. Changes may be overwritten. 
 // Generator version: 0.0.1.0
 //-------------------------------------------------------------------------------------------------------------------- 
@@ -16,6 +15,5 @@ namespace GroupToSection.Logic.Model
         public virtual int? Sis_Group_Id {get;set;}
         public virtual int? Sis_Import_Id {get;set; }
         public virtual int Course_Id { get; set; }
-
     }
 } 

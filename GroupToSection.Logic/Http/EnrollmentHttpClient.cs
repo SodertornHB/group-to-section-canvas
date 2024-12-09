@@ -3,16 +3,16 @@ using GroupToSection.Logic.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace GroupToSection.Logic.Services
+namespace EnrollmentToSection.Logic.Services
 {
-    public interface ICourseHttpClient : IHttpClient
+    public interface IEnrollmentHttpClient : IHttpClient
     {
     }
 
-    public class CourseHttpClient : HttpClient, ICourseHttpClient
+    public class EnrollmentHttpClient : HttpClient, IEnrollmentHttpClient
     {
-        public CourseHttpClient(System.Net.Http.IHttpClientFactory factory,
-            ILogger<CourseHttpClient> logger,
+        public EnrollmentHttpClient(System.Net.Http.IHttpClientFactory factory,
+            ILogger<EnrollmentHttpClient> logger,
             IOptions<AuthenticationSettings> authenticationSettingsOptions)
            : base(factory, logger, authenticationSettingsOptions)
         {

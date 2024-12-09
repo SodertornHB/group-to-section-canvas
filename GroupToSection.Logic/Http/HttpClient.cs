@@ -78,7 +78,7 @@ namespace GroupToSection.Logic.Http
         private async Task<HttpResponse> SendRequest(HttpMethod method, Uri url, string requestContent = "")
         {
             logger.LogDebug($"Sending {method} request to {url}. Content: {requestContent}");
-            if(method == HttpMethod.Get && !url.ToString().Contains('?')) url = new Uri($"{url}?per_page=100");
+            if (method == HttpMethod.Get && ShouldModifyUrl(url)) url = new Uri($"{url}?per_page=100");
             var request = new HttpRequestMessage(method, url);
             if (!string.IsNullOrEmpty(requestContent)) request.Content = new StringContent(requestContent, Encoding.UTF8, "application/json");
             var response = await Send(request);
@@ -87,6 +87,15 @@ namespace GroupToSection.Logic.Http
             string responseContent = await GetContent(response);
             logger.LogDebug($"Response code {response.StatusCode}. Content: {responseContent}");
             return new HttpResponse(response.StatusCode, response.IsSuccessStatusCode, responseContent, response.Headers);
+        }
+        private static bool ShouldModifyUrl(Uri url)
+        {
+            if (url.ToString().Contains('?'))
+                return false;
+
+            string lastSegment = url.Segments[^1];
+
+            return !int.TryParse(lastSegment, out _);
         }
 
         private static async Task<string> GetContent(HttpResponseMessage response)

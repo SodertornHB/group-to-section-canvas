@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using GroupToSection.Logic.Services;
 using GroupToSection.Logic.Settings;
 using Logic.Service;
-using CourseToSection.Logic.Services;
+using EnrollmentToSection.Logic.Services;
 
 namespace GroupToSection.Web
 {
@@ -49,6 +49,12 @@ namespace GroupToSection.Web
             services.AddTransient<ICourseHttpClient, CourseHttpClient>();
             services.AddTransient<IGroupCategoryHttpService, GroupCategoryHttpService>();
             services.AddTransient<IGroupHttpClient, GroupHttpClient>();
+            services.AddTransient<IEntityService, EntityService>();
+            services.AddTransient<IEntityHttpClient, EntityHttpClient>();
+            services.AddTransient<ISectionService, SectionService>();
+            services.AddTransient<ISectionHttpClient, SectionHttpClient>();
+            services.AddTransient<IEnrollmentService, EnrollmentService>();
+            services.AddTransient<IEnrollmentHttpClient, EnrollmentHttpClient>();
             services.Configure<CanvasApiSettings>(Configuration.GetSection("CanvasApiSettings"));
 
             services.Configure<RouteOptions>(options =>

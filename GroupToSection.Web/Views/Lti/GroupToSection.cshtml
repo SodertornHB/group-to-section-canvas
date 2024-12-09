@@ -96,10 +96,12 @@
 </div>
 <script type="text/javascript">
     $('.submitbutton').on('click', function (e) {
-        let Id = e.target.Name;
+        let Id = e.target.name;
+        console.log(e.target.name);
+
         $('#txtFeedback-' + Id).text('(Sparar...)')
         payload = {
-            'Id': Id
+            'groupId': Id
         }
 
         var url = '/lti/update-group-to-section';

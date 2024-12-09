@@ -82,10 +82,7 @@ namespace GroupToSection.Logic.Http
             try
             {
                 var content = JsonConvert.SerializeObject(model);
-                var response = await client.Post(new Uri(url), content);
-                response.CheckStatus();
-                logger.LogDebug($"Post data to {url}: {response.Content}");
-                return JsonConvert.DeserializeObject<T>(response.Content);
+                return await Post(url, content);
             }
             catch (HttpRequestException e)
             {
@@ -97,6 +94,14 @@ namespace GroupToSection.Logic.Http
                 logger.LogError(e, e.Message);
                 throw;
             }
+        }
+
+        protected async Task<T> Post(string url, string content)
+        {
+            var response = await client.Post(new Uri(url), content);
+            response.CheckStatus();
+            logger.LogDebug($"Post data to {url}: {response.Content}");
+            return JsonConvert.DeserializeObject<T>(response.Content);
         }
 
         public virtual async Task Put(string url, string id, T model)

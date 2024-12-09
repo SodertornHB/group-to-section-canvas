@@ -5,14 +5,14 @@ using Microsoft.Extensions.Options;
 
 namespace GroupToSection.Logic.Services
 {
-    public interface ICourseHttpClient : IHttpClient
+    public interface IEntityHttpClient : IHttpClient
     {
     }
 
-    public class CourseHttpClient : HttpClient, ICourseHttpClient
+    public class EntityHttpClient : HttpClient, IEntityHttpClient
     {
-        public CourseHttpClient(System.Net.Http.IHttpClientFactory factory,
-            ILogger<CourseHttpClient> logger,
+        public EntityHttpClient(System.Net.Http.IHttpClientFactory factory,
+            ILogger<EntityHttpClient> logger,
             IOptions<AuthenticationSettings> authenticationSettingsOptions)
            : base(factory, logger, authenticationSettingsOptions)
         {

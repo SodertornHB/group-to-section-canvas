@@ -11,6 +11,7 @@ using System.Linq;
 using Logic.Service;
 using Microsoft.Extensions.Options;
 using GroupToSection.Logic.Settings;
+using GroupToSection.Logic.Services;
 
 namespace GroupToSection.Web.ApiController
 {

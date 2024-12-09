@@ -14,6 +14,7 @@ using System.Linq;
 using GroupToSection.Logic.Settings;
 using Logic.Service;
 using Microsoft.Extensions.Options;
+using GroupToSection.Logic.Services;
 
 namespace GroupToSection.Web.Controllers
 {
