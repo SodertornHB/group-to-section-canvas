@@ -10,10 +10,12 @@ namespace GroupToSection.Logic.Model
 {
     public partial class Group : Entity
     {
+        public virtual string Name { get; set; }
         public virtual DateTime? Created_at {get;set;}
         public virtual int Group_Category_Id {get;set;}
         public virtual int? Sis_Group_Id {get;set;}
-        public virtual int? Sis_Import_Id {get;set;}
-      
+        public virtual int? Sis_Import_Id {get;set; }
+        public virtual int Course_Id { get; set; }
+
     }
 } 

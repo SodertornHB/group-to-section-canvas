@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using GroupToSection.Logic.Services;
 using GroupToSection.Logic.Settings;
 using Logic.Service;
+using CourseToSection.Logic.Services;
 
 namespace GroupToSection.Web
 {
@@ -43,6 +44,10 @@ namespace GroupToSection.Web
         protected override void CustomServiceConfiguration(IServiceCollection services)
         {
             services.AddTransient<IGroupService, GroupService>();
+            services.AddTransient<IGroupHttpClient, GroupHttpClient>();
+            services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ICourseHttpClient, CourseHttpClient>();
+            services.AddTransient<IGroupCategoryHttpService, GroupCategoryHttpService>();
             services.AddTransient<IGroupHttpClient, GroupHttpClient>();
             services.Configure<CanvasApiSettings>(Configuration.GetSection("CanvasApiSettings"));
 

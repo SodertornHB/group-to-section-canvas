@@ -11,6 +11,8 @@ namespace GroupToSection.Web.ViewModel
 {
     public partial class GroupViewModel : ViewModelBase
     {
+        public virtual string Name { get; set; }
+
         [DataType(DataType.Text)]
         public virtual DateTime? Created_at {get;set;} 
         public virtual int GroupCategoryId {get;set;} 

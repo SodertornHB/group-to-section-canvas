@@ -47,10 +47,12 @@ end if not exists (
     where table_name = 'Group'
 ) begin CREATE TABLE [dbo].[Group](
     [Id] [int] NOT NULL,
+    [Name] [nvarchar](256) NULL,
     [Created_at] [datetime2] NOT NULL,
     [Group_Category_Id] [int] NOT NULL,
-    [Sis_Group_Id] [int] NOT NULL,
-    [Sis_Import_Id] [int] NOT NULL,
+    [Sis_Group_Id] [int] NULL,
+    [Sis_Import_Id] [int] NULL,
+    [CourseId] [int] NOT NULL,
     CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED ([Id] ASC)
 ) ON [PRIMARY]
 end
@@ -60,6 +62,7 @@ go if not exists (
         where table_name = 'GroupCategory'
     ) begin CREATE TABLE [dbo].[GroupCategory](
         [Id] [int] NOT NULL,
+        [Name] [nvarchar](256) NULL,
         [Created_at] [datetime2] NOT NULL,
         [Course_Id] [int] NOT NULL,
         [Sis_GroupCategory_Id] [int] NOT NULL,

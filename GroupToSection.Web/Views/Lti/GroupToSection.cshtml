@@ -1,0 +1,123 @@
+﻿@using Web.ViewModel
+@model GroupToSectionViewModel
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<style type="text/css">
+    .group-to-section {
+        wIdth: 500px;
+        padding-top: 15px;
+    }
+
+        .group-to-section p {
+            margin-bottom: 0;
+        }
+
+        .group-to-section input {
+            padding: 5px 10px;
+        }
+
+            .group-to-section input.btn {
+                margin: 15px 0;
+            }
+
+        .group-to-section label {
+            display: block;
+            margin: 10px 0 0 0;
+            font-weight: bold;
+        }
+
+        .group-to-section .input-label-wrapper {
+            display: inline-block;
+        }
+
+        .group-to-section .hour-input {
+            wIdth: 60px;
+        }
+
+        .group-to-section .header {
+            cursor: pointer;
+        }
+
+            .group-to-section .header:hover {
+                text-decoration: underline;
+            }
+
+        .group-to-section .wrapper {
+            display: none;
+        }
+    details {
+        background: #eee;
+        margin-bottom: 2rem;
+        padding: .5rem 1rem;
+    }
+
+    summary {
+        cursor: pointer;
+    }
+
+    summary > * {
+        display: inline;
+    }
+
+</style>
+
+<div class="group-to-section">
+    <h3>Kopiera studenter från grupp till sektion</h3>
+    @if (Model.IsEmpty())
+    {
+        <b>Kursen har inga grupper konfigurerarde.</b>
+    }
+    else
+    {
+        <p>Notera att du inte bara kan skapa en sektion här, utan även uppdatera en sektion som du skapat tIdigare utifrån en grupp. Det här kanske du vill göra i det fall det tillkommit en eller flera studenter i den sedan tIdigare skapade gruppen.</p>
+        <p><b>Notera att:</b> om du väljer att uppdatera en sektion för en specifik grupp där det tillkommit en student kan vi inte nuläget inte garantera att alla kopplingar mellan sektionen och för sektionen tilldelade aktiviteter ligger kvar. Det kan tex gälla uppgifter som tilldelats en sektion eller en diskussion som tilldelats en sektion.</p>
+        <hr />
+    }
+    <div Id="groups">
+        @foreach (var category in Model.GroupCategories)
+        {
+            <details>
+                <summary>@category.Name</summary>
+                <div Id=@category.Name>
+                    @foreach (var item in category.Groups)
+                    {
+                        <p>
+                            <b>@item.Name</b> - @category.Name<br />
+                            <input type="submit" value="Skapa/uppdatera sektion" class="btn btn-primary btn-sm submitbutton" Id="btnSubmit" Name="@item.Id" /> <br />
+                            <span class="feedback" Id="txtFeedback-@item.Id"> </span><br /><br />
+                        </p>
+
+                    }
+                </div>
+            </details>
+        }
+        </div>
+</div>
+<script type="text/javascript">
+    $('.submitbutton').on('click', function (e) {
+        let Id = e.target.Name;
+        $('#txtFeedback-' + Id).text('(Sparar...)')
+        payload = {
+            'Id': Id
+        }
+
+        var url = '/lti/update-group-to-section';
+        if ('@Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")' == 'Production')
+        {
+            url = '/canvas-integration' + url;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: payload,
+            success: function () {
+                $('#txtFeedback-' + Id).text('Sparad!')
+            },
+            error: function (response) {
+                $('#txtFeedback-' + Id).text(response.responseText);
+            }
+        });
+    });
+</script>
