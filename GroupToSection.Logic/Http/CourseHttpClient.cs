@@ -6,8 +6,7 @@ using Microsoft.Extensions.Options;
 namespace GroupToSection.Logic.Services
 {
     public interface ICourseHttpClient : IHttpClient
-    {
-    }
+    { }
 
     public class CourseHttpClient : HttpClient, ICourseHttpClient
     {
@@ -15,7 +14,6 @@ namespace GroupToSection.Logic.Services
             ILogger<CourseHttpClient> logger,
             IOptions<AuthenticationSettings> authenticationSettingsOptions)
            : base(factory, logger, authenticationSettingsOptions)
-        {
-        }
+        { }
     }
 }

@@ -1,4 +1,3 @@
-using AutoMapper;
 using GroupToSection.Logic.Http;
 using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Services;
@@ -21,23 +20,17 @@ namespace Logic.Service
 
     public class CourseService : HttpService<Course>, ICourseService
     {
-        private readonly IMapper mapper;
         private readonly IGroupService groupHttpService;
-        private readonly IGroupCategoryHttpService groupCategoryService;
         private readonly CanvasApiSettings canvasApiSettings;
         private readonly string coursesUrl;
 
         public CourseService(ILogger<CourseService> logger,
             IGroupService groupHttpService,
-            IGroupCategoryHttpService groupCategoryService,
-            IMapper mapper,
             ICourseHttpClient courseHttpClient,
             IOptions<CanvasApiSettings> canvasApiSettingsOptions )
            : base(courseHttpClient, logger)
         {
-            this.mapper = mapper;
             this.groupHttpService = groupHttpService;
-            this.groupCategoryService = groupCategoryService;
             this.canvasApiSettings = canvasApiSettingsOptions.Value;
             coursesUrl = $"{canvasApiSettings.BaseUrl}/courses/";
         }

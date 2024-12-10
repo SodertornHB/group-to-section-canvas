@@ -6,8 +6,7 @@ using Microsoft.Extensions.Options;
 namespace EnrollmentToSection.Logic.Services
 {
     public interface IEnrollmentHttpClient : IHttpClient
-    {
-    }
+    { }
 
     public class EnrollmentHttpClient : HttpClient, IEnrollmentHttpClient
     {
@@ -15,7 +14,6 @@ namespace EnrollmentToSection.Logic.Services
             ILogger<EnrollmentHttpClient> logger,
             IOptions<AuthenticationSettings> authenticationSettingsOptions)
            : base(factory, logger, authenticationSettingsOptions)
-        {
-        }
+        { }
     }
 }

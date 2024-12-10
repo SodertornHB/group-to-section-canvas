@@ -59,7 +59,7 @@ namespace GroupToSection.Web.Controllers
             {
                 var group = await groupService.GetById(groupId);
                 var sectionId = await sectionService.CreateSectionIfNotExist(group);
-                var userIds = await groupService.GetUserIds(group.Id);
+                var userIds = await groupService.GetUserIdsFromGroup(group.Id);
                 await sectionService.EnrollUsersInSection(sectionId, userIds);
                 return new OkResult();
             }

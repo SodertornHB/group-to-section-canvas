@@ -1,4 +1,3 @@
-using AutoMapper;
 using GroupToSection.Logic.Http;
 using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Settings;
@@ -24,8 +23,6 @@ namespace GroupToSection.Logic.Services
 
     public class SectionService : HttpService<Section>, ISectionService
     {
-        private readonly IMapper mapper;
-        private readonly ISectionHttpClient sectionHttpClient;
         private readonly IEnrollmentService enrollmentService;
         private readonly CanvasApiSettings canvasApiSettings;
         private readonly string sectionsUrl;
@@ -33,14 +30,10 @@ namespace GroupToSection.Logic.Services
 
         public SectionService(ILogger<SectionService> logger,
             ISectionHttpClient httpClient,
-            IMapper mapper,
-            ISectionHttpClient sectionHttpClient,
             IEnrollmentService enrollmentService,
             IOptions<CanvasApiSettings> canvasApiSettingsOptions )
            : base(httpClient, logger)
         {
-            this.mapper = mapper;
-            this.sectionHttpClient = sectionHttpClient;
             this.enrollmentService = enrollmentService;
             this.canvasApiSettings = canvasApiSettingsOptions.Value;
             sectionsUrl = $"{canvasApiSettings.BaseUrl}/sections";
@@ -84,7 +77,7 @@ namespace GroupToSection.Logic.Services
         {
             foreach (var userId in userIds)
             {
-                await enrollmentService.EnrollInSection(sectionId, userId);
+                await enrollmentService.EnrollUserInSection(sectionId, userId);
             }
         }
 

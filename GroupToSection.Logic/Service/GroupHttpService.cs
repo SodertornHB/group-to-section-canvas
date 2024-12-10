@@ -1,14 +1,11 @@
-using AutoMapper;
 using GroupToSection.Logic.Http;
 using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Settings;
-using Logic.Model;
 using Logic.Service;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
 using System.Threading.Tasks;
 
 namespace GroupToSection.Logic.Services
@@ -17,29 +14,23 @@ namespace GroupToSection.Logic.Services
     {
         Task<Group> GetById(int id);
         Task<IEnumerable<GroupCategory>> GetGroupCategoriesWithGroupsByCourseId(string url, int courseId);
-        Task<int[]> GetUserIds(int groupId);
+        Task<int[]> GetUserIdsFromGroup(int groupId);
     }
 
     public class GroupService : HttpService<Group>, IGroupService
     {
-        private readonly IMapper mapper;
-        private readonly IGroupHttpClient groupHttpClient;
         private readonly IGroupCategoryHttpService groupCategoryHttpService;
         private readonly IEntityService entityService;
         private readonly CanvasApiSettings canvasApiSettings;
         private readonly string groupsUrl;
 
         public GroupService(ILogger<GroupService> logger,
-            IGroupHttpClient httpClient,
-            IMapper mapper,
-            IGroupHttpClient groupHttpClient,
+            IGroupHttpClient groupHhttpClient,
             IGroupCategoryHttpService groupCategoryHttpService,
             IEntityService entityService,
             IOptions<CanvasApiSettings> canvasApiSettingsOptions )
-           : base(httpClient, logger)
+           : base(groupHhttpClient, logger)
         {
-            this.mapper = mapper;
-            this.groupHttpClient = groupHttpClient;
             this.groupCategoryHttpService = groupCategoryHttpService;
             this.entityService = entityService;
             this.canvasApiSettings = canvasApiSettingsOptions.Value;
@@ -51,11 +42,11 @@ namespace GroupToSection.Logic.Services
         public async Task<IEnumerable<GroupCategory>> GetGroupCategoriesWithGroupsByCourseId(string url, int courseId)
         {
             var groupCategories = await groupCategoryHttpService.Get($"{url}/{courseId}/group_categories");
-            await GetGroupsAndAddToCategories(url, courseId, groupCategories);
+            await AddGroupsToCategories(url, courseId, groupCategories);
             return groupCategories;
         }
 
-        public async Task<int[]> GetUserIds(int groupId)
+        public async Task<int[]> GetUserIdsFromGroup(int groupId)
         {
             var entities = await entityService.Get($"{groupsUrl}/{groupId}/users");
             return entities.Select(x => x.Id).ToArray();
@@ -63,7 +54,7 @@ namespace GroupToSection.Logic.Services
 
         #region private 
 
-        private async Task GetGroupsAndAddToCategories(string url, int courseId, IEnumerable<GroupCategory> groupCategories)
+        private async Task AddGroupsToCategories(string url, int courseId, IEnumerable<GroupCategory> groupCategories)
         {
             var groups = await Get($"{url}/{courseId}/groups");
             foreach (var category in groupCategories)

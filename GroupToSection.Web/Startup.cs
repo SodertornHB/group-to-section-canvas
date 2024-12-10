@@ -54,7 +54,6 @@ namespace GroupToSection.Web
 
             #region register GroupCategory
             services.AddTransient<IGroupCategoryHttpService, GroupCategoryHttpService>();
-            services.AddTransient<IGroupCategoryDataAccess, GroupCategoryDataAccess>();
             services.AddSingleton<SqlStringBuilder<GroupCategory>>();
             #endregion
 

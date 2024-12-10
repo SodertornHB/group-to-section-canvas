@@ -5,8 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace GroupToSection.Logic.Services
 {
     public partial interface IGroupCategoryHttpService : IHttpService<GroupCategory>
-    {
-    }
+    { }
 
     public partial class GroupCategoryHttpService : HttpService<GroupCategory>, IGroupCategoryHttpService
     {
