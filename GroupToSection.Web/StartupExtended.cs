@@ -19,6 +19,8 @@ using GroupToSection.Logic.Services;
 using GroupToSection.Logic.Settings;
 using Logic.Service;
 using EnrollmentToSection.Logic.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace GroupToSection.Web
 {
@@ -61,6 +63,15 @@ namespace GroupToSection.Web
             {
                 options.LowercaseUrls = true;
             });
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                },
+                Formatting = Formatting.Indented 
+            };
         }
 
         protected override void CustomConfiguration(IApplicationBuilder app, IWebHostEnvironment env)
