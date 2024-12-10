@@ -13,24 +13,26 @@ namespace Logic.Service
 {
     public interface ICourseService : IHttpService<Course>
     {
-        Task<IEnumerable<Section>> GetSections(int courseId);
-        Task<IEnumerable<Group>> GetGroups(int courseId);
+        Task CreateOrUpdateSectionFromGroup(int groupId);
         Task<IEnumerable<GroupCategory>> GetGroupCategories(int courseId);
     }
 
     public class CourseService : HttpService<Course>, ICourseService
     {
-        private readonly IGroupService groupHttpService;
+        private readonly IGroupService groupService;
+        private readonly ISectionService sectionService;
         private readonly CanvasApiSettings canvasApiSettings;
         private readonly string coursesUrl;
 
         public CourseService(ILogger<CourseService> logger,
             IGroupService groupHttpService,
+            ISectionService sectionService,
             ICourseHttpClient courseHttpClient,
             IOptions<CanvasApiSettings> canvasApiSettingsOptions )
            : base(courseHttpClient, logger)
         {
-            this.groupHttpService = groupHttpService;
+            this.groupService = groupHttpService;
+            this.sectionService = sectionService;
             this.canvasApiSettings = canvasApiSettingsOptions.Value;
             coursesUrl = $"{canvasApiSettings.BaseUrl}/courses/";
         }
@@ -38,7 +40,7 @@ namespace Logic.Service
         public async Task<IEnumerable<GroupCategory>> GetGroupCategories(int courseId)
         {
             var groupCategories = await GetGroupCategoriesForCourse(courseId);
-            var groups = await groupHttpService.Get($"{coursesUrl}/{courseId}/groups"); 
+            var groups = await groupService.Get($"{coursesUrl}/{courseId}/groups"); 
             foreach (var category in groupCategories)
             {
                 category.Groups = groups.Where(x => x.Group_Category_Id == category.Id);
@@ -46,20 +48,18 @@ namespace Logic.Service
             return groupCategories;
         }
 
-        public Task<IEnumerable<Group>> GetGroups(int courseId)
+        public async Task CreateOrUpdateSectionFromGroup(int groupId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<IEnumerable<Section>> GetSections(int courseId)
-        {
-            throw new System.NotImplementedException();
+            var group = await groupService.GetById(groupId);
+            var sectionId = await sectionService.CreateSectionIfNotExist(group);
+            var userIds = await groupService.GetUserIdsFromGroup(group.Id);
+            await sectionService.EnrollUsersInSection(sectionId, userIds);
         }
 
         #region private 
         private async Task<IEnumerable<GroupCategory>> GetGroupCategoriesForCourse(int courseId)
         {
-            var groupCategories = await groupHttpService.GetGroupCategoriesWithGroupsByCourseId(coursesUrl, courseId);
+            var groupCategories = await groupService.GetGroupCategoriesWithGroupsByCourseId(coursesUrl, courseId);
             return groupCategories;
         }
         #endregion

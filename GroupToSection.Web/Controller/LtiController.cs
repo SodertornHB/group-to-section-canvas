@@ -13,18 +13,12 @@ namespace GroupToSection.Web.Controllers
     public class LtiController : Controller
     {
         private readonly ICourseService service;
-        private readonly ISectionService sectionService;
-        private readonly IGroupService groupService;
 
         public LtiController(
-            ICourseService courseService,
-            ISectionService sectionService,
-            IGroupService groupService
+            ICourseService courseService
             )
         {
             this.service = courseService;
-            this.sectionService = sectionService;
-            this.groupService = groupService;
         }
 
 #if DEBUG
@@ -57,10 +51,7 @@ namespace GroupToSection.Web.Controllers
         {
             try
             {
-                var group = await groupService.GetById(groupId);
-                var sectionId = await sectionService.CreateSectionIfNotExist(group);
-                var userIds = await groupService.GetUserIdsFromGroup(group.Id);
-                await sectionService.EnrollUsersInSection(sectionId, userIds);
+                await service.CreateOrUpdateSectionFromGroup(groupId);   
                 return new OkResult();
             }
             catch (Exception e)
