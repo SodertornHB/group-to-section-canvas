@@ -51,7 +51,7 @@ namespace Logic.Service
         public async Task CreateOrUpdateSectionFromGroup(int groupId)
         {
             var group = await groupService.GetById(groupId);
-            var sectionId = await sectionService.CreateSectionIfNotExist(group);
+            var sectionId = await sectionService.CreateOrUpdateSection(group.Course_Id, group.Name, group.GetIdentifier());
             var userIds = await groupService.GetUserIdsFromGroup(group.Id);
             await sectionService.EnrollUsersInSection(sectionId, userIds);
         }

@@ -1,5 +1,4 @@
 using GroupToSection.Logic.Http;
-using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Settings;
 using Logic.Model;
 using Logic.Service;
@@ -15,10 +14,8 @@ namespace GroupToSection.Logic.Services
     public interface ISectionService : IHttpService<Section>
     {
         Task EnrollUsersInSection(int sectionId, int[] userIds);
-        Task<IEnumerable<Section>> GetSectionsByCourseId(int courseId);
         /// <returns>new section id</returns>
-        Task<int> CreateSectionFromGroup(Group group);
-        Task<int> CreateSectionIfNotExist(Group group);
+        Task<int> CreateOrUpdateSection(int courseId, string sectionName, string sectionIdentifier);
     }
 
     public class SectionService : HttpService<Section>, ISectionService
@@ -40,39 +37,26 @@ namespace GroupToSection.Logic.Services
             coursesUrl = $"{canvasApiSettings.BaseUrl}/courses";
         }
 
-        public Task<IEnumerable<Section>> GetSectionsByCourseId(int courseId)
+        public async Task<int> CreateOrUpdateSection(int courseId, string sectionName, string sectionIdentifier)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task<int> CreateSectionFromGroup(Group group)
-        {
-            var content = JsonConvert.SerializeObject(new { course_section = new Section(group.Name, group.GetIdentifier()) });
-            var response = await Post($"{coursesUrl}/{group.Course_Id}/sections", content);
-            return response.Id;
-        }
-
-        public async Task<int> CreateSectionIfNotExist(Group group)
-        {
-            var sections = await Get($"{coursesUrl}/{group.Course_Id}/sections");
-            var section = sections.SingleOrDefault(x => x.Sis_section_id == group.GetIdentifier());
+            var sections = await Get($"{coursesUrl}/{courseId}/sections");
+            var section = sections.SingleOrDefault(x => x.Sis_section_id == sectionIdentifier);
 
             if (section == null)
             {
-                return await CreateSectionFromGroup(group);
+                return await CreateSectionFromGroup(courseId, sectionName, sectionIdentifier);
             }
             else
             {
                 var enrollments = await GetEnrollments(section.Id);
                 foreach (var enrollment in enrollments)
                 {
-                    await enrollmentService.Delete($"{coursesUrl}/{group.Course_Id}/enrollments", enrollment.id.ToString());
+                    await enrollmentService.Delete($"{coursesUrl}/{courseId}/enrollments", enrollment.id.ToString());
                 }
                 return section.Id;
             }
         }
-
-
+        
         public async Task EnrollUsersInSection(int sectionId, int[] userIds)
         {
             foreach (var userId in userIds)
@@ -83,6 +67,12 @@ namespace GroupToSection.Logic.Services
 
 
         #region private 
+        private async Task<int> CreateSectionFromGroup(int courseId, string sectionName, string sectionIdentifier)
+        {
+            var content = JsonConvert.SerializeObject(new { course_section = new Section(sectionName, sectionIdentifier) });
+            var response = await Post($"{coursesUrl}/{courseId}/sections", content);
+            return response.Id;
+        }
 
         private async Task<IEnumerable<Enrollment>> GetEnrollments(int sectionId) => await enrollmentService.Get($"{sectionsUrl}/{sectionId}/enrollments");
 
