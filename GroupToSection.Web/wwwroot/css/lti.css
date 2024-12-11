@@ -1,0 +1,56 @@
+﻿.group-to-section {
+    wIdth: 500px;
+    padding-top: 15px;
+}
+
+    .group-to-section p {
+        margin-bottom: 0;
+    }
+
+    .group-to-section input {
+        padding: 5px 10px;
+    }
+
+        .group-to-section input.btn {
+            margin: 15px 0;
+        }
+
+    .group-to-section label {
+        display: block;
+        margin: 10px 0 0 0;
+        font-weight: bold;
+    }
+
+    .group-to-section .input-label-wrapper {
+        display: inline-block;
+    }
+
+    .group-to-section .hour-input {
+        wIdth: 60px;
+    }
+
+    .group-to-section .header {
+        cursor: pointer;
+    }
+
+        .group-to-section .header:hover {
+            text-decoration: underline;
+        }
+
+    .group-to-section .wrapper {
+        display: none;
+    }
+
+details {
+    background: #eee;
+    margin-bottom: 2rem;
+    padding: .5rem 1rem;
+}
+
+summary {
+    cursor: pointer;
+}
+
+    summary > * {
+        display: inline;
+    }

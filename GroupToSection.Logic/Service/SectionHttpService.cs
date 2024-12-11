@@ -14,7 +14,7 @@ namespace GroupToSection.Logic.Services
     public interface ISectionService : IHttpService<Section>
     {
         Task EnrollUsersInSection(int sectionId, int[] userIds);
-        /// <returns>new section id</returns>
+        /// <returns>new or existing section id</returns>
         Task<int> CreateOrUpdateSection(int courseId, string sectionName, string sectionIdentifier);
     }
 
