@@ -3,6 +3,8 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+/Common.Web/appsettings.Development.json
+
 **/appsettings.local.json
 **/nlog.local.config
 
@@ -31,7 +33,7 @@ x86/
 bld/
 [Bb]in/
 [Oo]bj/
-[Ll]og/
+[Ll]ogs/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -353,6 +355,3 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-/Common.Web/appsettings.Development.json
-/Common.Web/appsettings.Development.json
-/Common.Web/appsettings.Development.json
