@@ -4,10 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 **/appsettings.local.json
-**/nlog.local.config
-
 **/appsettings.Development.json
 **/appsettings.production.json
+**/ltiConfig.xml
+**/nlog.local.config
 
 # User-specific files
 *.rsuser
