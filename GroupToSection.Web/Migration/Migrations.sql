@@ -41,34 +41,6 @@ go if not exists (
         [Trace] [nvarchar](4000) NULL,
         CONSTRAINT [PK_Log] PRIMARY KEY CLUSTERED ([Id] ASC)
     ) ON [PRIMARY]
-end if not exists (
-    select distinct 1
-    from information_schema.columns
-    where table_name = 'Group'
-) begin CREATE TABLE [dbo].[Group](
-    [Id] [int] NOT NULL,
-    [Name] [nvarchar](256) NULL,
-    [Created_at] [datetime2] NOT NULL,
-    [Group_Category_Id] [int] NOT NULL,
-    [Sis_Group_Id] [int] NULL,
-    [Sis_Import_Id] [int] NULL,
-    [CourseId] [int] NOT NULL,
-    CONSTRAINT [PK_Group] PRIMARY KEY CLUSTERED ([Id] ASC)
-) ON [PRIMARY]
-end
-go if not exists (
-        select distinct 1
-        from information_schema.columns
-        where table_name = 'GroupCategory'
-    ) begin CREATE TABLE [dbo].[GroupCategory](
-        [Id] [int] NOT NULL,
-        [Name] [nvarchar](256) NULL,
-        [Created_at] [datetime2] NOT NULL,
-        [Course_Id] [int] NOT NULL,
-        [Sis_GroupCategory_Id] [int] NOT NULL,
-        [Sis_Import_Id] [int] NOT NULL,
-        CONSTRAINT [PK_GroupCategory] PRIMARY KEY CLUSTERED ([Id] ASC)
-    ) ON [PRIMARY]
 end
 go IF EXISTS (
         SELECT 1
@@ -99,12 +71,10 @@ END TRY BEGIN CATCH RAISERROR(
 );
 RETURN;
 END CATCH;
--- Calculate the start and end datetime
 DECLARE @startDatetime DATETIME;
 SET @startDatetime = DATEADD(MINUTE, - @windowInMinutes, @datetime);
 DECLARE @endDatetime DATETIME;
 SET @endDatetime = DATEADD(MINUTE, @windowInMinutes, @datetime);
--- Query the logs table
 SELECT *
 FROM [dbo].[Log]
 WHERE CreatedOn BETWEEN @startDatetime AND @endDatetime
