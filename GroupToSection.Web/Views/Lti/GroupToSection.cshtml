@@ -1,33 +1,35 @@
 ﻿@using Web.ViewModel
+@using Localization
+@inject LocService SharedLocalizer
 @model GroupToSectionViewModel
 @{
     Layout = "~/Views/Shared/_LtiLayout.cshtml";
 }
 
 <div class="group-to-section">
-    <h3>Kopiera studenter från grupp till sektion</h3>
+    <h3>@SharedLocalizer.GetLocalizedHtmlString("Kopiera studenter från grupp till sektion")</h3>
     @if (Model.IsEmpty())
     {
-        <b>Kursen har inga grupper konfigurerarde.</b>
+        <b>@SharedLocalizer.GetLocalizedHtmlString("Kursen har inga grupper.")</b>
     }
     else
     {
-        <p>Notera att du inte bara kan skapa en sektion här, utan även uppdatera en sektion som du skapat tIdigare utifrån en grupp. Det här kanske du vill göra i det fall det tillkommit en eller flera studenter i den sedan tIdigare skapade gruppen.</p>
-        <p><b>Notera att:</b> om du väljer att uppdatera en sektion för en specifik grupp där det tillkommit en student kan vi inte nuläget inte garantera att alla kopplingar mellan sektionen och för sektionen tilldelade aktiviteter ligger kvar. Det kan tex gälla uppgifter som tilldelats en sektion eller en diskussion som tilldelats en sektion.</p>
+        <p>@SharedLocalizer.GetLocalizedHtmlString("Här kan du skapa sektioner utifrån grupper, där studenterna i gruppen kopieras till sektionen. Du kan också uppdatera en tidigare skapad sektion baserad på en grupp, till exempel om nya studenter har lagts till i gruppen.")</p>
+        <p>@SharedLocalizer.GetLocalizedHtmlString("Observera att uppdatering av en sektion tar bort och lägger till alla studenter igen, vilket kan bryta kopplingar till tilldelade aktiviteter som uppgifter eller diskussioner.")</p>
         <hr />
     }
-    <div Id="groups">
+    <div id="groups">
         @foreach (var category in Model.GroupCategories)
         {
             <details>
                 <summary>@category.Name</summary>
-                <div Id=@category.Name>
+                <div id=@category.Name>
                     @foreach (var item in category.Groups)
                     {
                         <p>
                             <b>@item.Name</b> - @category.Name<br />
-                            <input type="submit" value="Skapa/uppdatera sektion" class="btn btn-primary btn-sm submitbutton" Id="btnSubmit" Name="@item.Id" /> <br />
-                            <span class="feedback" Id="txtFeedback-@item.Id"> </span><br /><br />
+                            <input type="submit" value="@SharedLocalizer.GetLocalizedHtmlString("Skapa/uppdatera sektion")" class="btn btn-primary btn-sm submitbutton" id="btnSubmit" Name="@item.Id" /> <br />
+                            <span class="feedback" id="txtFeedback-@item.Id"> </span><br /><br />
                         </p>
 
                     }

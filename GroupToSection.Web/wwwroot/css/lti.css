@@ -1,6 +1,12 @@
-﻿.group-to-section {
-    wIdth: 500px;
-    padding-top: 15px;
+﻿p {
+    font-size: 14px;
+}
+
+.group-to-section {
+    width: 90%;
+    max-width: 1200px; 
+    padding: 15px;
+    margin: 0 auto; 
 }
 
     .group-to-section p {
