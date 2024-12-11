@@ -34,7 +34,7 @@ namespace GroupToSection.Web
         {
             return new List<CultureInfo> {
                 new CultureInfo("sv-se"),
-                new CultureInfo("en-gb"),
+                //new CultureInfo("en-gb"),
             };
         }
 

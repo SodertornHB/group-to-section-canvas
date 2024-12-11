@@ -48,6 +48,11 @@ input[type="checkbox"] {
     transform: scale(2);
 }
 
+.container {
+    max-width: 100%;
+    font-size: 0.7rem;
+}
+
 a.navbar-brand {
     font-size: 55px;
 }

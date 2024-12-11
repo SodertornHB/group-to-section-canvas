@@ -5,13 +5,10 @@
 //--------------------------------------------------------------------------------------------------------------------
 
 using AutoMapper;
-using GroupToSection.Logic.Model;
 using GroupToSection.Logic.Services;
 using GroupToSection.Web.ViewModel;
-using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,15 +16,12 @@ namespace GroupToSection.Web.Controllers
 {
     public partial class LogController : Controller
     {
-        private readonly ILogger<LogController> logger;
         private readonly ILogService service;
         private readonly IMapper mapper;
 
-        public LogController(ILogger<LogController> logger, 
-        ILogService service, 
+        public LogController(ILogService service, 
         IMapper mapper)
         {
-            this.logger = logger;
             this.service = service;
             this.mapper = mapper;
         }
@@ -36,49 +30,7 @@ namespace GroupToSection.Web.Controllers
         {
             var list = await service.GetAll();
             var viewModels = mapper.Map<IEnumerable<LogViewModel>>(list);
-            return View(viewModels.OrderByDescending(x => x.Id));
-        }
-        
-        public ActionResult Create()
-        {
-            return View(new LogViewModel());
-        }
-
-        [HttpPost]
-        public virtual async Task<ActionResult> Create([FromForm]LogViewModel viewModel)
-        {
-            var model = mapper.Map<Log>(viewModel);
-            await service.Insert(model);
-            return RedirectToAction(nameof(Index));
-        }
-
-        public virtual async Task<ActionResult> Edit(int id)
-        {
-            var entity = await service.Get(id);
-            return View(mapper.Map<LogViewModel>(entity));
-        }
-
-
-        [HttpPost]
-        public virtual async Task<ActionResult> Edit([FromForm]LogViewModel viewModel)
-        {
-            var model = mapper.Map<Log>(viewModel);
-            await service.Update(model);
-            return RedirectToAction(nameof(Index));         
-        }
-
-        public virtual async Task<ActionResult> Remove(int id)
-        {
-            var entity = await service.Get(id);
-            return View(mapper.Map<LogViewModel>(entity));        
-        }
-
-        [HttpPost]
-        public virtual async Task<ActionResult> Remove([FromForm]LogViewModel viewModel)
-        {
-            var model = mapper.Map<Log>(viewModel);
-            await service.Delete(viewModel.Id);
-            return RedirectToAction(nameof(Index));         
+            return View(viewModels.OrderByDescending(x => x.Id).Take(10000));
         }
     }
 }
