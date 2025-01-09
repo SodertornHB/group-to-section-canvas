@@ -31,8 +31,6 @@ To run this application, you need to configure your `appsettings.json` file with
 - Under ConnectionStrings, replace SERVER_NAME with the name of your database server and DATABASE_NAME with the name of your database.
 
 ### 3. Application Settings
-**Host**: Specify the host URL where your application will be running.
-
 **Name**: Enter a name for your application.
 
 **KeepLogsInDays**: Define the number of days to retain logs.

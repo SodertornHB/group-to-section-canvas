@@ -1,17 +1,5 @@
-/*
- TRUNCATE TABLE [dbo].[Migration]
- TRUNCATE TABLE [dbo].[Log]
- TRUNCATE TABLE [dbo].[Group]
- TRUNCATE TABLE [dbo].[GroupCategory]
- DROP TABLE [dbo].[Migration]
- DROP TABLE [dbo].[Log]
- DROP TABLE [dbo].[Group]
- DROP TABLE [dbo].[GroupCategory]
- 
- CREATE USER [bibl-sql-user] FOR LOGIN [bibl-sql-user] WITH DEFAULT_SCHEMA = dbo
- 
- ALTER ROLE db_datareader ADD MEMBER [bibl-sql-user]
- ALTER ROLE db_datawriter ADD MEMBER [bibl-sql-user]
+/* 
+ IMPORTANT! Before running this script you need to create a new database  
  */
 if not exists (
     select distinct 1
