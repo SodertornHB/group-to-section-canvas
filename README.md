@@ -12,6 +12,7 @@ cd group-to-section
 ## Create the Database
 This project requires a database to store transaction data. Use the SQL script provided to create the necessary database and tables.
 1. Open your database management tool (such as SQL Server Management Studio).
+1. Create a new database
 1. Locate the SQL create script at ./GroupToSection.Web/Migration/Migrations.sql.
 1. Run the script to set up the database schema.
 
@@ -22,25 +23,25 @@ Ensure that you have .NET Core installed. Run the following command in the proje
 ## Configuration
 To run this application, you need to configure your `appsettings.json` file with the correct settings for your environment. A template file, `appsettings.json.template`, is provided in the repository to guide you through this process.
 
-### 1. Create a Configuration File
+### Create a Configuration File
 - Copy the template file and rename it to appsettings.json.
 
 - Open appsettings.json and update the fields with your specific settings as follows:
 
-### 2. Database Connection
+#### 1. Database Connection
 - Under ConnectionStrings, replace SERVER_NAME with the name of your database server and DATABASE_NAME with the name of your database.
 
-### 3. Application Settings
+#### 2. Application Settings
 **Name**: Enter a name for your application.
 
 **KeepLogsInDays**: Define the number of days to retain logs.
 
 **KeysFolder**: Specify the folder path where any necessary keys are stored.
 
-### 4. IP Blocking Options
+#### 3. IP Blocking Options
 **BlockedIPs**: If there are any IP addresses you want to block, add them here as a list.
 
-### 5. Canvas API Settings
+#### 4. Canvas API Settings
 **BaseUrl**: Enter the endpoint URL for your Canvas API.
 
 **Token**: Enter the bearer token for accessing the Canvas API.
@@ -56,11 +57,11 @@ To maintain organization-specific files and configurations separate from the mai
 1. In the root of the solution, create a folder named `organizational-specific`.
 1. Inside this folder, add any files or configurations specific to your organization. The folder structure should mirror the structure of the web project. The following file types are automatically copied: `.css`, `.js`, `.cs`, `.json`, `.csproj`, `.resx`, `.xml`
 
-### Important Note
-Any files in the web project that have the same name and path as files in the organizational-specific folder will be overwritten by the files from organizational-specific during the build process. Be cautious when adding files to avoid unintentional overwrites.
-
 #### Example: Custom appsettings.development.json
 If you want to use a custom `appsettings.development.json` file, place it directly in the organizational-specific folder. During the build process, it will be copied to the appropriate location in the web project.
+
+### Important Note
+Any files in the web project that have the same name and path as files in the organizational-specific folder will be overwritten by the files from organizational-specific during the build process. Be cautious when adding files to avoid unintentional overwrites.
 
 ## Configuration in the Project File
 The copying of files is configured in the .csproj file. Below is the configuration that enables this copying process:
