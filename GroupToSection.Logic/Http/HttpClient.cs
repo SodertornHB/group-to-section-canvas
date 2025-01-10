@@ -7,6 +7,7 @@
 using GroupToSection.Logic.Settings;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Linq;
 using System.Net;
@@ -23,6 +24,7 @@ namespace GroupToSection.Logic.Http
         Task<HttpResponse> Post(Uri url, string content);
         Task<HttpResponse> Put(Uri url, string content);
         Task<HttpResponse> Delete(Uri url);
+        Task<HttpResponse> Delete<T>(Uri url, T model);
         void SetBearerToken(string token);
     }
 
@@ -59,6 +61,11 @@ namespace GroupToSection.Logic.Http
         public async Task<HttpResponse> Delete(Uri url)
         {
             return await SendRequest(HttpMethod.Delete, url);
+        }
+
+        public async Task<HttpResponse> Delete<T>(Uri url, T model)
+        {
+            return await SendRequest(HttpMethod.Delete, url, JsonConvert.SerializeObject(model));
         }
 
         public void SetBearerToken(string token)

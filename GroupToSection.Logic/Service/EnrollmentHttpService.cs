@@ -33,6 +33,10 @@ namespace Logic.Service
 
             await Post($"{canvasApiSettings.BaseUrl}/sections/{sectionId}/enrollments", content);
         }
+        public override Task Delete(string url, string id)
+        {
+            return client.Delete(new System.Uri($"{url}/{id}"), new EnrollmentTask("delete"));
+        }
 
     }
 }
