@@ -12,8 +12,8 @@ namespace GroupToSection.Logic.Services
     {
         public GroupHttpClient(System.Net.Http.IHttpClientFactory factory,
             ILogger<GroupHttpClient> logger,
-            IOptions<AuthenticationSettings> authenticationSettingsOptions)
-           : base(factory, logger, authenticationSettingsOptions)
+            IOptions<CanvasApiSettings> settingsOptions)
+           : base(factory, logger, settingsOptions)
         { }
     }
 }

@@ -13,8 +13,8 @@ namespace GroupToSection.Logic.Services
     {
         public EntityHttpClient(System.Net.Http.IHttpClientFactory factory,
             ILogger<EntityHttpClient> logger,
-            IOptions<AuthenticationSettings> authenticationSettingsOptions)
-           : base(factory, logger, authenticationSettingsOptions)
+            IOptions<CanvasApiSettings> settingsOptions)
+           : base(factory, logger, settingsOptions)
         {
         }
     }

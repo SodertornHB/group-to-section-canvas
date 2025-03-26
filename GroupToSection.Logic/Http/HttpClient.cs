@@ -32,11 +32,11 @@ namespace GroupToSection.Logic.Http
     {
         protected readonly IHttpClientFactory clientFactory;
         protected readonly ILogger<HttpClient> logger;
-        protected AuthenticationSettings settings;
+        protected CanvasApiSettings settings;
 
         public HttpClient(IHttpClientFactory clientFactory,
             ILogger<HttpClient> logger,
-            IOptions<AuthenticationSettings> settings)
+            IOptions<CanvasApiSettings> settings)
         {
             this.clientFactory = clientFactory;
             this.logger = logger;
@@ -70,13 +70,13 @@ namespace GroupToSection.Logic.Http
 
         public void SetBearerToken(string token)
         {
-            settings.BearerToken = token;
+            settings.Token = token;
         }
 
         protected virtual async Task<HttpResponseMessage> Send(HttpRequestMessage request)
         {
             var client = clientFactory.CreateClient();
-            client.SetBearerTokenIfExists(settings.BearerToken);
+            client.SetBearerTokenIfExists(settings.Token);
             return await client.SendAsync(request);
         }
 

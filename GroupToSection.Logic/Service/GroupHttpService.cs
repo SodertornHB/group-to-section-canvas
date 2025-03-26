@@ -43,6 +43,7 @@ namespace GroupToSection.Logic.Services
         {
             var groupCategories = await groupCategoryHttpService.Get($"{url}/{courseId}/group_categories");
             await AddGroupsToCategories(url, courseId, groupCategories);
+
             return groupCategories;
         }
 

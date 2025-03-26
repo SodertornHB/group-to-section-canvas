@@ -76,7 +76,6 @@ namespace GroupToSection.Web
 
             services.AddSingleton<LocService>();
             services.AddTransient<IHttpClient, Logic.Http.HttpClient>();
-            services.Configure<AuthenticationSettings>(Configuration.GetSection("Authentication"));
             services.Configure<ApplicationSettings>(Configuration.GetSection("Application"));
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
             services.Configure<IpBlockerSettings>(Configuration.GetSection("IPBlockOptions"));

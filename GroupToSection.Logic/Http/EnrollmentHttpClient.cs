@@ -12,8 +12,8 @@ namespace EnrollmentToSection.Logic.Services
     {
         public EnrollmentHttpClient(System.Net.Http.IHttpClientFactory factory,
             ILogger<EnrollmentHttpClient> logger,
-            IOptions<AuthenticationSettings> authenticationSettingsOptions)
-           : base(factory, logger, authenticationSettingsOptions)
+            IOptions<CanvasApiSettings> settingsOptions)
+           : base(factory, logger, settingsOptions)
         { }
     }
 }
